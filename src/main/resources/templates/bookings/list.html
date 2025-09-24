@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookings</title>
+    <link rel="stylesheet" th:href="@{/css/dark.css}">
+</head>
+<body>
+<div class="container">
+    <div class="header stack">
+        <div class="brand"><div class="dot"></div><h1>Bookings</h1></div>
+        <nav class="toolbar">
+            <a class="btn" th:href="@{/}">Home</a>
+            <a class="btn outline" th:href="@{/rooms}">Rooms</a>
+        </nav>
+    </div>
+    <div th:if="${error}" class="alert">[[${error}]]</div>
+    <table class="animated">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Room</th>
+            <th>Customer</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="b : ${bookings}">
+            <td th:text="${b.id}">1</td>
+            <td th:text="${b.room.number}">101</td>
+            <td th:text="${b.customer.name}">John</td>
+            <td th:text="${b.checkIn}">2024-01-01</td>
+            <td th:text="${b.checkOut}">2024-01-03</td>
+            <td>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <form th:action="@{'/bookings/' + ${b.id} + '/delete'}" method="post" style="display:inline">
+                        <button class="btn danger small" type="submit">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Create Booking</h2>
+    <form th:action="@{/bookings}" method="post" class="form">
+        <div class="field">
+            <label>Room</label>
+            <select name="roomId" required>
+                <option th:each="r : ${rooms}" th:value="${r.id}" th:text="${r.number} + ' - ' + ${r.type}"></option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Customer</label>
+            <select name="customerId" required>
+                <option th:each="c : ${customers}" th:value="${c.id}" th:text="${c.name} + ' (' + ${c.email} + ')' "></option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Check-in</label>
+            <input type="date" name="checkIn" required>
+        </div>
+        <div class="field">
+            <label>Check-out</label>
+            <input type="date" name="checkOut" required>
+        </div>
+        <button class="btn" type="submit">Create</button>
+    </form>
+</div>
+</body>
+</html>
+
+

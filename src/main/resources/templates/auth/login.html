@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Jhabak HMS</title>
+    <link rel="stylesheet" th:href="@{/css/dark.css}">
+</head>
+<body>
+  <div class="accent-orb one"></div>
+  <div class="accent-orb two"></div>
+  <div class="accent-orb three"></div>
+  <div class="container center-screen" style="max-width:420px; flex-direction:column">
+    <div class="brand fade-in" style="justify-content:center; gap:12px; margin-bottom:12px"><div class="dot"></div><h1>Login</h1></div>
+    <form th:action="@{/login}" method="post" class="form panel animated hover-pop">
+        <div class="field">
+            <label>Username</label>
+            <input type="text" name="username" value="admin" required>
+        </div>
+        <div class="field">
+            <label>Password</label>
+            <input type="password" name="password" value="admin" required>
+        </div>
+        <button class="btn" type="submit" style="width:100%">Sign in</button>
+    </form>
+    <p style="color:var(--muted);margin-top:12px">Admin: admin / admin &nbsp;•&nbsp; Customer: customer / customer</p>
+  </div>
+</body>
+</html>
+
+

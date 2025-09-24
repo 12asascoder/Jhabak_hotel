@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customers</title>
+    <link rel="stylesheet" th:href="@{/css/dark.css}">
+</head>
+<body>
+<div class="container">
+    <div class="header stack">
+        <div class="brand"><div class="dot"></div><h1>Customers</h1></div>
+        <nav class="toolbar">
+            <a class="btn" th:href="@{/}">Home</a>
+            <a class="btn outline" th:href="@{/rooms}">Rooms</a>
+        </nav>
+    </div>
+    <table class="animated">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${customers}">
+            <td th:text="${c.id}">1</td>
+            <td th:text="${c.name}">John</td>
+            <td th:text="${c.email}">john@example.com</td>
+            <td th:text="${c.phone}">1234567890</td>
+            <td>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <form th:action="@{'/customers/' + ${c.id} + '/delete'}" method="post" style="display:inline">
+                        <button class="btn danger small" type="submit">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Add Customer</h2>
+    <form th:action="@{/customers}" method="post" th:object="${customer}" class="form">
+        <div class="field">
+            <label>Name</label>
+            <input type="text" th:field="*{name}" required>
+        </div>
+        <div class="field">
+            <label>Email</label>
+            <input type="email" th:field="*{email}" required>
+        </div>
+        <div class="field">
+            <label>Phone</label>
+            <input type="text" th:field="*{phone}">
+        </div>
+        <button class="btn" type="submit">Create</button>
+    </form>
+</div>
+</body>
+</html>
+
+

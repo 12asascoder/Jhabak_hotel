@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rooms</title>
+    <link rel="stylesheet" th:href="@{/css/dark.css}">
+</head>
+<body>
+<div class="container">
+    <div class="header stack">
+        <div class="brand"><div class="dot"></div><h1>Rooms</h1></div>
+        <nav class="toolbar">
+            <a class="btn" th:href="@{/}">Home</a>
+            <a class="btn outline" th:href="@{/bookings}">Bookings</a>
+        </nav>
+    </div>
+    <table class="animated">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Number</th>
+            <th>Type</th>
+            <th>Price/Night</th>
+            <th>Available</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${rooms}">
+            <td th:text="${r.id}">1</td>
+            <td th:text="${r.number}">101</td>
+            <td th:text="${r.type}">Single</td>
+            <td th:text="${r.pricePerNight}">100</td>
+            <td>
+                <span class="badge" th:classappend="${r.available} ? ' ok' : ' no'" th:text="${r.available} ? 'Available' : 'Occupied'"></span>
+            </td>
+            <td>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <form th:action="@{'/rooms/' + ${r.id} + '/toggle'}" method="post" style="display:inline">
+                        <button class="btn small" type="submit">Toggle</button>
+                    </form>
+                    <form th:action="@{'/rooms/' + ${r.id} + '/delete'}" method="post" style="display:inline">
+                        <button class="btn danger small" type="submit">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Add Room</h2>
+    <form th:action="@{/rooms}" method="post" th:object="${room}" class="form">
+        <div class="field">
+            <label>Number</label>
+            <input type="text" th:field="*{number}" required>
+        </div>
+        <div class="field">
+            <label>Type</label>
+            <input type="text" th:field="*{type}" required>
+        </div>
+        <div class="field">
+            <label>Price/Night</label>
+            <input type="number" step="0.01" th:field="*{pricePerNight}" required>
+        </div>
+        <button class="btn" type="submit">Create</button>
+    </form>
+</div>
+</body>
+</html>
+
+

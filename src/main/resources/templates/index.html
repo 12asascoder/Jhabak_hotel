@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jhabak HMS</title>
+    <link rel="stylesheet" th:href="@{/css/dark.css}">
+    <style>
+        .nav { display:flex; gap:12px; margin: 16px 0; }
+        .card { background:#1f2937; padding:16px; border-radius:10px; }
+        .link { color:#93c5fd; text-decoration:none; }
+        .link:hover { text-decoration:underline; }
+    </style>
+    <link rel="icon" href="data:,">
+  </head>
+  <body>
+    <div class="accent-orb one"></div>
+    <div class="accent-orb two"></div>
+    <div class="accent-orb three"></div>
+    <div class="container center-screen" style="flex-direction:column; gap:16px">
+      <div class="header stack">
+        <div class="brand">
+          <div class="dot"></div>
+          <h1>Jhabak Hotel Management System</h1>
+        </div>
+        <nav class="toolbar">
+          <a class="btn" th:href="@{/rooms}">Rooms</a>
+          <a class="btn" th:href="@{/customers}">Customers</a>
+          <a class="btn" th:href="@{/bookings}">Bookings</a>
+          <a class="btn outline" th:href="@{/logout}">Logout</a>
+        </nav>
+      </div>
+
+      <div class="grid cols-3 stagger" style="width:100%">
+        <div class="panel pad animated hover-pop">
+          <div class="kpi">
+            <span class="label">Occupancy</span>
+            <span class="value">--%</span>
+            <span class="trend">Live</span>
+          </div>
+        </div>
+        <div class="panel pad animated hover-pop">
+          <div class="kpi">
+            <span class="label">Rooms</span>
+            <span class="value">--</span>
+            <span class="trend">Synced</span>
+          </div>
+        </div>
+        <div class="panel pad animated hover-pop">
+          <div class="kpi">
+            <span class="label">Bookings (today)</span>
+            <span class="value">--</span>
+            <span class="trend">Live</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel pad animated" style="margin-top:16px">
+        <p>Logged in as <span th:text="${#authentication?.name}">admin</span></p>
+        <p class="empty">Use the navigation above to manage rooms, customers, and bookings.</p>
+      </div>
+    </div>
+  </body>
+  </html>
+
+
