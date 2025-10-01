@@ -42,6 +42,24 @@ public class CustomerController {
         customerRepository.deleteById(id);
         return "redirect:/customers";
     }
+
+    @GetMapping("/self")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public String selfForm(Model model) {
+        model.addAttribute("customer", new Customer());
+        return "customers/self";
+    }
+
+    @PostMapping("/self")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public String selfCreate(@Valid @ModelAttribute("customer") Customer customer, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "customers/self";
+        }
+        customerRepository.save(customer);
+        model.addAttribute("created", true);
+        return "customers/self";
+    }
 }
 
 

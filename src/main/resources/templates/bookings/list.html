@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Bookings</title>
@@ -14,6 +14,7 @@
             <a class="btn outline" th:href="@{/rooms}">Rooms</a>
         </nav>
     </div>
+    <div th:if="${success}" class="alert ok">[[${success}]]</div>
     <div th:if="${error}" class="alert">[[${error}]]</div>
     <table class="animated">
         <thead>
@@ -24,6 +25,7 @@
             <th>Check-in</th>
             <th>Check-out</th>
             <th>Actions</th>
+            <th>Service Request</th>
         </tr>
         </thead>
         <tbody>
@@ -40,6 +42,7 @@
                     </form>
                 </div>
             </td>
+            <td th:text="${b.serviceRequest}">N/A</td>
         </tr>
         </tbody>
     </table>
@@ -65,6 +68,10 @@
         <div class="field">
             <label>Check-out</label>
             <input type="date" name="checkOut" required>
+        </div>
+        <div class="field">
+            <label>Service request (optional)</label>
+            <textarea name="serviceRequest" rows="3" placeholder="e.g., Airport pickup, late check-in"></textarea>
         </div>
         <button class="btn" type="submit">Create</button>
     </form>

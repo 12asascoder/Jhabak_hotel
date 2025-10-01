@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Reminders</title>
+    <link rel="stylesheet" th:href="@{/css/dark.css}">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+<div class="container">
+    <div class="header stack">
+        <div class="brand"><div class="dot"></div><h1>Reminders</h1></div>
+        <nav class="toolbar">
+            <a class="btn" th:href="@{/}">Home</a>
+            <a class="btn outline" th:href="@{/admin/revenue}">Revenue</a>
+        </nav>
+    </div>
+    <h2>Check-outs due today</h2>
+    <table class="animated">
+        <thead>
+        <tr>
+            <th>#</th><th>Room</th><th>Customer</th><th>Check-in</th><th>Check-out</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="b : ${dueCheckout}">
+            <td th:text="${b.id}">1</td>
+            <td th:text="${b.room.number}">101</td>
+            <td th:text="${b.customer.name}">John</td>
+            <td th:text="${b.checkIn}">2024-01-01</td>
+            <td th:text="${b.checkOut}">2024-01-03</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
+

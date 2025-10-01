@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,48 +17,32 @@
     <div class="accent-orb one"></div>
     <div class="accent-orb two"></div>
     <div class="accent-orb three"></div>
-    <div class="container center-screen" style="flex-direction:column; gap:16px">
-      <div class="header stack">
-        <div class="brand">
-          <div class="dot"></div>
-          <h1>Jhabak Hotel Management System</h1>
+    <div class="container" style="flex-direction:column; gap:12px; padding-top:16px">
+      <div class="header stack" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:12px; text-align:center">
+        <div class="brand" style="justify-content:center; align-items:center; gap:12px">
+          <h1 style="font-size:clamp(40px, 6vw, 80px); line-height:1.1; letter-spacing:0.5px; margin:0">Jhabak Hotel Management System</h1>
         </div>
-        <nav class="toolbar">
-          <a class="btn" th:href="@{/rooms}">Rooms</a>
-          <a class="btn" th:href="@{/customers}">Customers</a>
+        <nav class="toolbar" style="justify-content:center; gap:10px">
+          <a class="btn" sec:authorize="hasRole('ADMIN')" th:href="@{/rooms}">Rooms</a>
+          <a class="btn" sec:authorize="hasRole('ADMIN')" th:href="@{/customers}">Customers</a>
           <a class="btn" th:href="@{/bookings}">Bookings</a>
+          <a class="btn outline" sec:authorize="hasRole('CUSTOMER')" th:href="@{/customers/self}">My Profile</a>
+          <a class="btn outline" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/reminders}">Reminders</a>
+          <a class="btn outline" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/revenue}">Revenue</a>
           <a class="btn outline" th:href="@{/logout}">Logout</a>
         </nav>
       </div>
 
-      <div class="grid cols-3 stagger" style="width:100%">
-        <div class="panel pad animated hover-pop">
-          <div class="kpi">
-            <span class="label">Occupancy</span>
-            <span class="value">--%</span>
-            <span class="trend">Live</span>
-          </div>
-        </div>
-        <div class="panel pad animated hover-pop">
-          <div class="kpi">
-            <span class="label">Rooms</span>
-            <span class="value">--</span>
-            <span class="trend">Synced</span>
-          </div>
-        </div>
-        <div class="panel pad animated hover-pop">
-          <div class="kpi">
-            <span class="label">Bookings (today)</span>
-            <span class="value">--</span>
-            <span class="trend">Live</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel pad animated" style="margin-top:16px">
+      <div class="panel pad animated" style="margin:192px auto 0; max-width:900px; width:100%; text-align:center">
         <p>Logged in as <span th:text="${#authentication?.name}">admin</span></p>
         <p class="empty">Use the navigation above to manage rooms, customers, and bookings.</p>
       </div>
+
+      <div style="position:fixed; left:0; right:0; bottom:20px; display:flex; justify-content:center; pointer-events:none">
+        <div style="width:100%; max-width:1100px; pointer-events:auto" th:replace="fragments/insights :: body"></div>
+      </div>
+
+      
     </div>
   </body>
   </html>

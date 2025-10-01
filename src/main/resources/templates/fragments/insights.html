@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="panel pad animated" style="padding:12px">
+  <div class="grid cols-3" style="gap:10px">
+    <div class="kpi">
+      <span class="label">Occupancy</span>
+      <span class="value" th:text="${globalInsights.occupancy} + '%'">--%</span>
+      <span class="trend">Live</span>
+    </div>
+    <div class="kpi">
+      <span class="label">Rooms</span>
+      <span class="value" th:text="${globalInsights.rooms}">--</span>
+      <span class="trend">Synced</span>
+    </div>
+    <div class="kpi">
+      <span class="label">Bookings (today)</span>
+      <span class="value" th:text="${globalInsights.bookingsToday}">--</span>
+      <span class="trend">Live</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+

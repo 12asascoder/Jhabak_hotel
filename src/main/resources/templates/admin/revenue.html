@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Revenue</title>
+    <link rel="stylesheet" th:href="@{/css/dark.css}">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+<div class="container">
+    <div class="header stack">
+        <div class="brand"><div class="dot"></div><h1>Revenue</h1></div>
+        <nav class="toolbar">
+            <a class="btn" th:href="@{/}">Home</a>
+            <a class="btn outline" th:href="@{/admin/reminders}">Reminders</a>
+        </nav>
+    </div>
+
+    <div class="grid cols-3">
+        <div class="panel pad"><div class="kpi"><span class="label">Total Charges</span><span class="value" th:text="${totalCharges}">0</span></div></div>
+        <div class="panel pad"><div class="kpi"><span class="label">Total Expenses</span><span class="value" th:text="${totalExpenses}">0</span></div></div>
+        <div class="panel pad"><div class="kpi"><span class="label">Net</span><span class="value" th:text="${net}">0</span></div></div>
+    </div>
+
+    <h2>Add Item</h2>
+    <form th:action="@{/admin/revenue}" method="post" class="form">
+        <div class="field"><label>Amount</label><input type="number" name="amount" step="0.01" required></div>
+        <div class="field"><label>Kind</label>
+            <select name="kind" required>
+                <option value="CHARGE">CHARGE</option>
+                <option value="EXPENSE">EXPENSE</option>
+            </select>
+        </div>
+        <div class="field"><label>Description</label><input type="text" name="description"></div>
+        <div class="field"><label>Customer (for CHARGE)</label>
+            <select name="customerId">
+                <option value="">-- none --</option>
+                <option th:each="c : ${customers}" th:value="${c.id}" th:text="${c.name} + ' (' + ${c.email} + ')' "></option>
+            </select>
+        </div>
+        <div class="field"><label>Date</label><input type="date" name="date" th:value="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"></div>
+        <button class="btn" type="submit">Add</button>
+    </form>
+
+    <h2>Items</h2>
+    <table class="animated">
+        <thead><tr><th>#</th><th>Date</th><th>Kind</th><th>Amount</th><th>Description</th><th>Customer</th></tr></thead>
+        <tbody>
+        <tr th:each="i : ${items}">
+            <td th:text="${i.id}">1</td>
+            <td th:text="${i.date}">2024-01-01</td>
+            <td th:text="${i.kind}">EXPENSE</td>
+            <td th:text="${i.amount}">0.00</td>
+            <td th:text="${i.description}">-</td>
+            <td th:text="${i.customer != null ? i.customer.name : '-'}">-</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
+

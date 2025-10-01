@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Booking Confirmed</title>
+  <link rel="stylesheet" th:href="@{/css/dark.css}">
+</head>
+<body>
+<div class="container" style="max-width:720px">
+  <div class="header stack">
+    <div class="brand"><div class="dot"></div><h1>Booking Confirmed</h1></div>
+    <nav class="toolbar">
+      <a class="btn" th:href="@{/}">Home</a>
+      <a class="btn outline" th:href="@{/bookings}">My Bookings</a>
+    </nav>
+  </div>
+  <div class="panel pad animated hover-pop">
+    <p>Your booking is confirmed. Reference: <strong th:text="${booking.id}">1</strong></p>
+    <p>Room: <span th:text="${booking.room.number}">101</span> &nbsp;•&nbsp; Customer: <span th:text="${booking.customer.name}">John</span></p>
+    <p>Check-in: <span th:text="${booking.checkIn}">2025-01-01</span> &nbsp;•&nbsp; Check-out: <span th:text="${booking.checkOut}">2025-01-03</span></p>
+    <p th:if="${booking.serviceRequest}">Service request: <span th:text="${booking.serviceRequest}">-</span></p>
+    <div class="stack" style="margin-top:12px">
+      <a class="btn" th:href="@{'/bookings/' + ${booking.id} + '/download'}">Download confirmation</a>
+    </div>
+  </div>
+  <div th:replace="fragments/insights :: body" style="margin-top:12px"></div>
+</div>
+</body>
+</html>
+
+
