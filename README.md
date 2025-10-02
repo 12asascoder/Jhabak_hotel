@@ -34,6 +34,37 @@ mvn -q -Dspring-boot.run.profiles=mysql spring-boot:run
 # http://localhost:8080/login
 ```
 
+## Deploy (Docker)
+1. Build jar:
+```bash
+mvn -q -DskipTests package
+```
+2. Build and run with Docker:
+```bash
+# App
+docker build -t jhabak-hms:latest .
+docker run --rm -p 8080:8080 \
+  -e SPRING_PROFILES_ACTIVE=mysql \
+  -e DB_URL="jdbc:mysql://<mysql-host>:3306/jhabakhms?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true" \
+  -e DB_USER="<user>" -e DB_PASS="<pass>" \
+  --name jhabak-hms jhabak-hms:latest
+```
+
+Or with docker-compose (MySQL):
+```bash
+docker compose up -d mysql
+docker run --rm -p 8080:8080 \
+  -e SPRING_PROFILES_ACTIVE=mysql \
+  -e DB_URL="jdbc:mysql://host.docker.internal:3306/jhabakhms?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true" \
+  -e DB_USER="jhabak" -e DB_PASS="jhabak" \
+  --name jhabak-hms jhabak-hms:latest
+```
+
+## Production notes
+- Set `SPRING_PROFILES_ACTIVE=mysql` and configure `DB_URL`, `DB_USER`, `DB_PASS`.
+- Behind a reverse proxy, set `server.port` via env or `-p` mapping.
+- Templates include responsive `<meta name="viewport">` for mobile/iPad.
+
 ## Logins
 - Admin: `admin` / `admin`
 - Customer: `customer` / `customer`
